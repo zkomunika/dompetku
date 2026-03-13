@@ -9,6 +9,7 @@ const authRoutes = require('./routes/auth');
 const transactionRoutes = require('./routes/transactions');
 
 const app = express();
+app.set('trust proxy', 1);
 const PORT = process.env.PORT || 3000;
 
 // ===== SECURITY MIDDLEWARE =====
@@ -17,10 +18,16 @@ app.use(helmet());
 
 // CORS: izinkan frontend mengakses API
 app.use(cors({
-  origin: ['http://localhost:5500', 'http://127.0.0.1:5500', 'http://localhost:3001', '*'],
+  origin: ['http://localhost:5500', 'http://127.0.0.1:5500', 'https://dompetku-uts.netlify.app', '*'],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
+
+// Bypass Ngrok browser warning
+app.use((req, res, next) => {
+  res.setHeader('ngrok-skip-browser-warning', 'true');
+  next();
+});
 
 // Rate limiting: cegah brute force
 const authLimiter = rateLimit({
