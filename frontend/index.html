@@ -518,7 +518,11 @@
 
   // ── API HELPER ──
   async function apiFetch(path, opts = {}) {
-    const headers = { 'Content-Type': 'application/json', ...(opts.headers || {}) };
+    const headers = { 
+      'Content-Type': 'application/json', 
+      'ngrok-skip-browser-warning': 'true',
+      ...(opts.headers || {})
+    };
     if (accessToken) headers['Authorization'] = `Bearer ${accessToken}`;
 
     let res = await fetch(API + path, { ...opts, headers });
