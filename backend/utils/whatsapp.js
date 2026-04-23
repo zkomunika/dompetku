@@ -53,7 +53,7 @@ const sendWhatsApp = (phone, message) => {
 };
 
 /**
- * Template pesan notifikasi
+ * pesan notifikasi
  */
 const notifTemplates = {
   newTransaction: (name, type, amount, category) => {
